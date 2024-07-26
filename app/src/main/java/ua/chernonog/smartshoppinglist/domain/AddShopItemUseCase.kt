@@ -1,8 +1,8 @@
 package ua.chernonog.smartshoppinglist.domain
 
-class AddShopItemUseCase {
+class AddShopItemUseCase(private val shopListRepository: ShopListRepository) {
 
-    fun addShopItem (shopItem : ShopItem) {
-
+    fun addShopItem(shopItem: ShopItem) {
+        shopListRepository.addShopItem(shopItem)
     }
 }
