@@ -1,4 +1,4 @@
-package ua.chernonog.smartshoppinglist
+package ua.chernonog.smartshoppinglist.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
