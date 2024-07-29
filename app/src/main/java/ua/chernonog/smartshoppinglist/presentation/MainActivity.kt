@@ -1,47 +1,28 @@
 package ua.chernonog.smartshoppinglist.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import ua.chernonog.smartshoppinglist.ui.theme.SmartShoppingListTheme
+import androidx.lifecycle.ViewModelProvider
+import ua.chernonog.smartshoppinglist.R
+import ua.chernonog.smartshoppinglist.domain.ShopItem
 
 class MainActivity : ComponentActivity() {
+    private lateinit var viewModel: MainViewModel
+    private var counter = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            SmartShoppingListTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+        setContentView(R.layout.activity_main)
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel.shopList.observe(this) {
+            Log.d("MainActivityTest", it.toString())
+            val item = it[0]
+            while (counter == 0) {
+                viewModel.changeEnableState(item )
+                counter++
             }
         }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SmartShoppingListTheme {
-        Greeting("Android")
     }
 }
