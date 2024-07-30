@@ -6,13 +6,14 @@ import ua.chernonog.smartshoppinglist.domain.ShopItem
 import ua.chernonog.smartshoppinglist.domain.ShopListRepository
 
 object ShopListRepositoryImpl : ShopListRepository {
-    private val shopList = mutableListOf<ShopItem>()
+    private val shopList = sortedSetOf<ShopItem>(
+        { i1, i2 -> i1.id.compareTo(i2.id) })
     private val liveData = MutableLiveData<List<ShopItem>>()
 
     private var autoIncrementId = 0
 
     init {
-        for (i in 0 until 10) {
+        for (i in 0 until 15) {
             val item = ShopItem("Name $i", i, true)
             addShopItem(item)
         }
@@ -47,10 +48,11 @@ object ShopListRepositoryImpl : ShopListRepository {
     }
 
     override fun getShopList(): LiveData<List<ShopItem>> {
-       return liveData
+        return liveData
 
     }
-    private fun updateList(){
+
+    private fun updateList() {
         liveData.value = shopList.toList()
     }
 }
